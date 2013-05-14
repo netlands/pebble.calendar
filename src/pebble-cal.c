@@ -18,11 +18,12 @@
 #define NWD_NONE 0
 #define NWD_FRANCE 1
 #define NWD_USA 2
-#define NWD_MAX 3
+#define NWD_JAPAN 3
+#define NWD_MAX 4
 
 // Compilation-time options
 #define LANG_CUR LANG_ENGLISH
-#define NWD_COUNTRY NWD_USA
+#define NWD_COUNTRY NWD_JAPAN /* NWD_NONE for No Non Working Days */
 #define WEEK_STARTS_ON_SUNDAY true
 #define SHOW_WEEK_NUMBERS false
 
@@ -329,7 +330,7 @@ static bool isNonWorkingDay(const Date *theDate) {
 	if (theDate->day == 1  && theDate->month == JAN) return true; // New year's day
 	if (theDate->day == 11 && theDate->month == NOV) return true; // Armistice 1918 // Veteran's day
 	if (theDate->day == 25 && theDate->month == DEC) return true; // Noël // Christmas
-
+	
 #if NWD_COUNTRY == NWD_FRANCE
 	if (theDate->day == 1  && theDate->month == MAY) return true; // Fête du travail
 	if (theDate->day == 8  && theDate->month == MAY) return true; // Armistice 1945
@@ -376,6 +377,26 @@ static bool isNonWorkingDay(const Date *theDate) {
 		break;
 	}
 
+#elif NWD_COUNTRY == NWD_JAPAN
+	/* =CONCATENATE("if (theDate->day == ",B2," && theDate->month == ",UPPER(LEFT(A2,3)),") return true; // ",E2) */
+	if (theDate->day == 1 && theDate->month == JAN) return true; // New Year's Day
+	if (theDate->day == 14 && theDate->month == JAN) return true; // Coming of age day
+	if (theDate->day == 11 && theDate->month == FEB) return true; // National Foundation day
+	if (theDate->day == 20 && theDate->month == MAR) return true; // Vernal Equiniox day
+	if (theDate->day == 29 && theDate->month == APR) return true; // Showa day
+	if (theDate->day == 3 && theDate->month == MAY) return true; // Constitution Memorial Day
+	if (theDate->day == 4 && theDate->month == MAY) return true; // Greenery day
+	if (theDate->day == 5 && theDate->month == MAY) return true; // Children's Day
+	if (theDate->day == 6 && theDate->month == MAY) return true; // Children's Day Observed
+	if (theDate->day == 15 && theDate->month == JUL) return true; // Marine Day
+	if (theDate->day == 16 && theDate->month == SEP) return true; // Respect for the aged Day
+	if (theDate->day == 23 && theDate->month == SEP) return true; // Autumnal Equiniox day
+	if (theDate->day == 14 && theDate->month == OCT) return true; // Health and Sports Day
+	if (theDate->day == 3 && theDate->month == NOV) return true; // Culture Day
+	if (theDate->day == 4 && theDate->month == NOV) return true; // Culture Day Observed
+	if (theDate->day == 23 && theDate->month == NOV) return true; // Labour Thanksgiving Day
+	if (theDate->day == 23 && theDate->month == DEC) return true; // The Emperor's Birthday
+	
 #endif
 	return false;
 }
