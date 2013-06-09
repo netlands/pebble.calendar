@@ -1,6 +1,6 @@
 pebble.calendar
 ===============
-Pebble Calendar with Japanese Holidays 
+Static Pebble Calendar with Japanese Holidays 
 
 Based on the calendar app by [Jean-Noel_MATTERN](http://download.famillemattern.com/public/pebble/pebble-cal/); edited and compiled using [CloudPebble](https://cloudpebble.net/).
 
